@@ -1,5 +1,6 @@
 library(tidyverse)
 library(ggplot2)
+library(RMKdiscrete)
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 #bring up the data as file-specific dataframes
@@ -12,7 +13,7 @@ poison_mle<- function(occurence_data, weight_data){
   for (i in 1:length(occurence_data)){
     lambda <- lambda + occurence_data[i]*weight_data[i]
   }
-  lambda <- lambda/ sum(occurence_data)
+  lambda <- lambda/ sum(weight_data)
 }
 
 plot_poisson_comp <- function(full_data,occurence_data,weight_data){
@@ -35,3 +36,5 @@ plot_poisson_comp <- function(full_data,occurence_data,weight_data){
 plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_spiders)
 plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_sowbugs)
 plot_poisson_comp(mitchell,mitchell$k_number_of_eggs,mitchell$C_count_of_beans_with_k_eggs)
+
+
