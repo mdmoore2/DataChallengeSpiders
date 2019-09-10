@@ -18,11 +18,14 @@ cole <- cbind(cole, poisson_spiders)
 #plot the two plots on top of eachother using ggplot
 spider_plot <- ggplot(cole) + 
   aes(x=k_number_of_arthropods, y=C_count_of_boards_with_k_spiders) + 
-  geom_point() +
+  geom_point(colour='blue') +
   theme_minimal() +
   xlab('Number seen') +
   ylab('Occurences')
 
+spider_plot <- spider_plot + 
+  geom_point(y=cole$poisson_spiders, x=cole$k_number_of_arthropods, colour='red')
+  
 
 
 
