@@ -16,10 +16,22 @@ poison_mle<- function(occurence_data, weight_data){
   lambda <- lambda/ sum(weight_data)
 }
 
-plot_poisson_comp <- function(full_data,occurence_data,weight_data){
-  lambda <- poison_mle(occurence_data, weight_data) #calculate poisson_mle
-  poisson_data <- dpois(occurence_data, lambda, log=FALSE) #create a varaible that represents the poisson distribution
+plot_poisson_comp <- function(full_data,occurence_data,weight_data,animal){
+  lambda <-  poison_mle(occurence_data, weight_data)
   
+  if (animal == 'spider'){
+    lambda_1 <-  lambda
+    lambda_2 <-  0
+  } else if (animal == 'snowbug'){
+    lambda_1 <-  (1-0.53214)*lambda
+    lambda_2 <-  0.53214
+  } else if (animal == 'weavill'){
+    lambda_1 <-  lambda
+    lambda_2 <-  0
+  }
+  lgp_data <- 
+  poisson_data <- dpois(occurence_data, lambda, log=FALSE) #create a varaible that represents the poisson distribution
+  lagrange_data <- dLGP(occurence_data,lambda_1,lambda_2)
   #plot the two plots on top of eachother using ggplot
   plot_data <- ggplot(full_data) + 
     aes(x=occurence_data, y=weight_data/sum(weight_data)) + 
@@ -30,11 +42,14 @@ plot_poisson_comp <- function(full_data,occurence_data,weight_data){
   
   plot_data <- plot_data + 
     geom_point(y=poisson_data, x=occurence_data, colour='red')
+  plot_data <- plot_data + 
+    geom_path(y=lagrange_data, x=occurence_data, colour='green')
+  
   show(plot_data)
 }
 
-plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_spiders)
-plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_sowbugs)
-plot_poisson_comp(mitchell,mitchell$k_number_of_eggs,mitchell$C_count_of_beans_with_k_eggs)
+#plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_spiders,"spider")
+plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_sowbugs,"snowbug")
+#plot_poisson_comp(mitchell,mitchell$k_number_of_eggs,mitchell$C_count_of_beans_with_k_eggs,"weavill")
 
 
