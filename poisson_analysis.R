@@ -26,8 +26,9 @@ plot_poisson_comp <- function(full_data,occurence_data,weight_data,animal){
     lambda_1 <-  (1-0.53214)*lambda
     lambda_2 <-  0.53214
   } else if (animal == 'weavill'){
-    lambda_1 <-  lambda
-    lambda_2 <-  0
+    repulsion = -.15
+    lambda_1 <-  (1-repulsion)*lambda
+    lambda_2 <-  repulsion
   }
   lgp_data <- 
   poisson_data <- dpois(occurence_data, lambda, log=FALSE) #create a varaible that represents the poisson distribution
@@ -48,8 +49,8 @@ plot_poisson_comp <- function(full_data,occurence_data,weight_data,animal){
   show(plot_data)
 }
 
-#plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_spiders,"spider")
+plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_spiders,"spider")
 plot_poisson_comp(cole,cole$k_number_of_arthropods, cole$C_count_of_boards_with_k_sowbugs,"snowbug")
-#plot_poisson_comp(mitchell,mitchell$k_number_of_eggs,mitchell$C_count_of_beans_with_k_eggs,"weavill")
+plot_poisson_comp(mitchell,mitchell$k_number_of_eggs,mitchell$C_count_of_beans_with_k_eggs,"weavill")
 
 
